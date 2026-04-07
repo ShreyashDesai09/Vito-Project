@@ -1,49 +1,59 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import './loan.css'
+function Loan() {
+  const [loan, setLoan] = useState({ amount: '', purpose: '', tenure: '12' });
+  const navigate = useNavigate();
 
-function loan() {
+  const handleApply = async (e) => {
+    e.preventDefault();
+    const userId = localStorage.getItem('userId');
+    const rev = localStorage.getItem('tempRev');
+
+    const dResp = await fetch('http://localhost:4000/decision', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ monthlyRevenue: rev, loanAmount: loan.amount })
+    });
+    const dRes = await dResp.json();
+
+    await fetch('http://localhost:4000/loan/apply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, ...loan, status: dRes.data.decision, score: dRes.data.score })
+    });
+
+    navigate('/decision', { state: dRes.data });
+  };
+
   return (
+    <div className="container mt-5 p-5 " style={{ maxWidth: '500px' }}>
+      
+      <h2 className="text-center mb-4">Loan Details</h2>
+      
+      <form onSubmit={handleApply}>
+      
+        <div className="form-floating mb-3">
+          <input type="number" className="form-control" onChange={e => setLoan({...loan, amount: e.target.value})} required />
+          <label>AMOUNT</label>
+        </div>
+      
+        <div className="form-floating mb-3">
+          <input type="text" className="form-control" onChange={e => setLoan({...loan, purpose: e.target.value})} required />
+          <label>PURPOSE</label>
+        </div>
+      
+        <select className="form-select mb-4" onChange={e => setLoan({...loan, tenure: e.target.value})}>
+          <option value="12">12 Months</option>
+          <option value="24">24 Months</option>
+          <option value="36">36 Months</option>
+        </select>
+      
+        <button className="btn btn-success w-100 py-2 fw-bold">SUBMIT APPLICATION</button>
+      
+      </form>
     
-    <div className="container">
-      <br /><br /><br /><br />
-      
-      <div className="form-floating mb-3">
-        <input type="number" class="form-control" id="floatingPassword" placeholder="Loan Amount"/>
-        <label for="floatingPassword">LOAN AMOUNT</label>
-      </div>
-
-
-      <div className="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingPassword" placeholder="Loan Purpose"/>
-        <label for="floatingPassword">Loan Purpose</label>
-      </div>
-
-      
-
-      <select className="form-select" aria-label="Default select example">
-        <option selected>Tenure</option>
-        <option value="1">1 months</option>
-        <option value="2">2 months</option>
-        <option value="3">3 months</option>
-        <option value="4">4 months</option>
-        <option value="5">5 months</option>
-        <option value="6">6 months</option>
-        <option value="7">7 months</option>
-        <option value="8">8 months</option>
-        <option value="9">9 months</option>
-        <option value="10">10 months</option>
-        <option value="11">11 months</option>
-        <option value="12">12 months</option>
-      </select>
-
-      <br />
-
-      <button type="submit" class="btn btn-primary">Submit</button>
-
     </div>
-
-  )
+  );
 }
-
-export default loan
+export default Loan;
