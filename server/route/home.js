@@ -4,7 +4,7 @@ const result = require('../util/result')
 const router = express.Router()
 
 router.get('/' , (req,res) => {
-    res.send("Decision")
+    res.send("Home")
 })
 
 module.exports = router
