@@ -3,7 +3,7 @@ const pool = require('../db/db');
 const { createResult } = require('../util/result');
 const router = express.Router();
 
-router.post('/register', (req, res) => {
+router.post('/user', (req, res) => {
     const { name, pan, businessType, monthlyRevenue } = req.body;
     const query = `INSERT INTO User (name, pan, business_type, monthly_revenue) VALUES (?, ?, ?, ?)`;
     pool.execute(query, [name, pan, businessType, monthlyRevenue], (err, data) => {
