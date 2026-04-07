@@ -1,35 +1,31 @@
 import { useState } from 'react'
-import Home from './pages/home/home' 
+import User from './pages/user/user' 
 import Loan from './pages/loan/loan'
-import Signup from './pages/signup/signup'
 import Decision from './pages/decision/decision'
 import { Navigate, Routes , Route } from 'react-router-dom'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
       <Routes>
-
         <Route
-          path='/home'
-          element={<Home/>}
+          path='/'
+          element={<Navigate to='/user' />}
+          />  
+        <Route
+          path='user'
+          element={<User/>}
         />
 
         <Route
-          path='/loan'
+          path='loan'
           element={<Loan/>}
         />
 
         <Route
-          path='/signup'
-          element={<Signup/>}
-        />
-
-        <Route
-          path='/decision'
+          path='decision'
           element={<Decision/>}
         />
 
