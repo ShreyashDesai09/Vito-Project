@@ -1,4 +1,4 @@
-# VITTO
+# Loan Decision Engine - Vitto
 
 > Lightweight loan-decision demo: backend (Express + MySQL) and frontend (Vite + React).
 
