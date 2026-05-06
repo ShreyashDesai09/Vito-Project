@@ -7,7 +7,7 @@ function User() {
 
   const handleNext = async (e) => {
     e.preventDefault();
-    const resp = await fetch('http://localhost:4000/register', {
+    const resp = await fetch('http://localhost:4000/user', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)

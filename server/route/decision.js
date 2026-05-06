@@ -3,6 +3,7 @@ const { createResult } = require('../util/result');
 const router = express.Router();
 
 router.post('/', (req, res) => {
+    
     const { monthlyRevenue, loanAmount } = req.body;
     const annualIncome = parseFloat(monthlyRevenue) * 12;
     const maxLoanLimit = annualIncome * 0.30;
