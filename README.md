@@ -196,4 +196,3 @@ This deterministic rule is easy to test and reason about; it is suitable for a d
 - Error responses follow the `createResult` helper: `{ status: 'error', error: <error> }`.
 - Default server port is `4000` and frontend default port is `5173` (Vite).
 
-# Vito-Project
